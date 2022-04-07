@@ -19,18 +19,18 @@ source oe-init-build-env
 
 ## Set Local Conf
 
-## Change Machine Type
+### Change Machine Type
 ```
 MACHINE ??= "raspberrypi4-64"
 ``` 
 
-## Set AUTHORIZED_KEYS_FILE_PATH
+### Set AUTHORIZED_KEYS_FILE_PATH
 ```
 AUTHORIZED_KEYS_FILE_PATH="<path_to_authorized_keys>"
 ```
 authorized_keys should be a file containing the public key you wish to use to access the rasperry pi
 
-## To get an image
+### To Produce a Flashable Image Add Image Type:
 ```
 IMAGE_FSTYPES = "rpi-sdimg"
 ```
