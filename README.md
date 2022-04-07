@@ -4,7 +4,7 @@ Minimal image required to boot to QT application on Raspberry Pi
 # Getting Started
 ## Clone all Submodules
 ```
-git clone --init --recursive
+git submodule update --init --recursive
 ```
 
 ## Navigate to poky
@@ -71,6 +71,8 @@ where `/dev/sdb` is the location of the sd card
 
 # References
 Started with [Hacking Raspberry Pi 4 with Yocto](https://lancesimms.com/RaspberryPi/HackingRaspberryPi4WithYocto_Introduction.html)
+
+[Poky](https://git.yoctoproject.org/poky)
 
 # TODO
 * Figure out how to have `bblayers.conf` automatically include the required layers
