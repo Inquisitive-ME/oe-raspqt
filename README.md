@@ -46,6 +46,7 @@ PARALLEL_MAKE = "-j 16"
   meta-rpilinux
   meta-openembedded/meta-oe
   meta-openembedded/meta-python
+  meta-qt6
 ```
 
 # Build
@@ -69,6 +70,10 @@ where `/dev/sdb` is the location of the sd card
 * basic additions work (python numpy)
 * image size 316 MB
 
+## QT
+* Can build QT application but can't render
+* test application is `/usr/share/examples/demos/stocqt/stocqt`
+
 # References
 Started with [Hacking Raspberry Pi 4 with Yocto](https://lancesimms.com/RaspberryPi/HackingRaspberryPi4WithYocto_Introduction.html)
 
@@ -81,8 +86,9 @@ Started with [Hacking Raspberry Pi 4 with Yocto](https://lancesimms.com/Raspberr
   meta-rpilinux
   meta-openembedded/meta-oe
   meta-openembedded/meta-python
+  meta-qt6
 ```
 
 * Figure out mDNS or a method to broadcast / know IP Address
 
-* Add ability to compile and run QT applications
+* Figure graphics for QT applications
