@@ -30,10 +30,6 @@ AUTHORIZED_KEYS_FILE_PATH="<path_to_authorized_keys>"
 ```
 authorized_keys should be a file containing the public key you wish to use to access the rasperry pi
 
-### To Produce a Flashable Image Add Image Type:
-```
-IMAGE_FSTYPES = "rpi-sdimg"
-```
 ### Optional: Set number of threads for bitbake and make
 ```
 BB_NUMBER_THREADS = "16"
@@ -57,12 +53,17 @@ bitbake rpilinux-image
 ```
 
 # Output
-`/tmp/deploy/images/raspberrypi4-64/rpilinux-image-raspberrypi4-64.rootfs.rpi-sdimg`
+`/tmp/deploy/images/raspberrypi4-64/rpilinux-image-raspberrypi4-64.wic.bz2`
 Can be flashed to sd card using
 ```
-sudo dd if=rpilinux-image-raspberrypi4-64-20220406135939.rootfs.rpi-sdimg of=/dev/sdb bs=8192 status=progress
+sudo bmaptool copy rpilinux-image-raspberrypi4-64.wic.bz2 /dev/sdb
 ```
 where `/dev/sdb` is the location of the sd card
+
+`bmaptool` can be installed on Ubuntu via apt:
+`sudo apt install bmap-tools`
+
+[flashing reference](https://github.com/agherzan/meta-raspberrypi/issues/637)
 
 # Current Status
 * Image boots
