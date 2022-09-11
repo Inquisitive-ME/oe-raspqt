@@ -91,5 +91,4 @@ Started with [Hacking Raspberry Pi 4 with Yocto](https://lancesimms.com/Raspberr
 ```
 
 * Figure out mDNS or a method to broadcast / know IP Address
-
-* Figure graphics for QT applications
+* Add method for updates via usb or network instead of having to flash an sd card and replace the existing one
