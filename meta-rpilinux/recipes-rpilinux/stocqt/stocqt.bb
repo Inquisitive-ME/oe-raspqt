@@ -8,7 +8,10 @@ inherit qt6-cmake
 W = "${WORKDIR}"
 
 SRCBRANCH ??= "main"
-SRC_URI = "git://github.com/Inquisitive-ME/stocqt.git;branch=${SRCBRANCH}"
+SRC_URI = "\
+            git://github.com/Inquisitive-ME/stocqt.git;branch=${SRCBRANCH} \
+            file://stocqt.service \
+          "
 
 SRCREV = "${AUTOREV}"
 
@@ -16,9 +19,17 @@ S = "${WORKDIR}/git"
 
 DEPENDS += "qtdeclarative qtdeclarative-native qtbase qtimageformats qtshadertools qtsvg"
 
-FILES:${PN} = " ${bindir}, ${bindir}/stocqt, /usr/share/examples/demos/stocqt/stocqt"
+inherit systemd
 
-# do_install:append(){
-# 	install -d ${D}${bindir}
-# }
+SYSTEMD_PACKAGES = "stocqt"
 
+SYSTEMD_SERVICE:${PN}   =     "stocqt.service"
+FILES:${PN}             =     " ${systemd_system_unitdir}/stocqt.service \
+                                ${bindir}, ${bindir}/stocqt, /usr/share/examples/demos/stocqt/stocqt \
+                              "
+
+do_install:append(){
+    install -d ${D}/${systemd_system_unitdir}
+    
+    install -m 0644 ${WORKDIR}/stocqt.service ${D}/${systemd_system_unitdir}
+}

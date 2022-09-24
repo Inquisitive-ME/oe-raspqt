@@ -1,0 +1,14 @@
+[Unit]
+Description=Demo Stock QT Application
+Wants=network-online.target
+After=network-online.target
+After=sockets.target
+
+[Service]
+Type=simple
+SyslogIdentifier=stocqt
+Environment="QT_QPA_EGLFS_HIDECURSOR=1"
+ExecStart=/usr/share/examples/demos/stocqt/stocqt
+
+[Install]
+WantedBy=multi-user.target

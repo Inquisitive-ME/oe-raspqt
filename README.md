@@ -80,6 +80,26 @@ Started with [Hacking Raspberry Pi 4 with Yocto](https://lancesimms.com/Raspberr
 
 [Poky](https://git.yoctoproject.org/poky)
 
+# Work in Progress
+## Console Rendering Issues
+I have had some issues with the console rendering ontop of the QT application
+To fix this I have disabled the `getty@tty1.service` you can still ssh into the machine and loging to a console
+but in order to login via the screen I think you would need to renable this. This is in the `rpilinux-image.bb` recipe `ROOTFS_POSTPROCESS_COMMAND += "remove_tty1_service; "`
+ 
+## Dual Partition Updates
+I attempted to add either rouc or mender to try to have 2 partitions and be able to update via usb or network
+I could not get either working so my plan was to just have a second partition with some manual method of being able to perform updates using the second partition
+
+Currently that partition is not automounting for some reason
+
+But when it is mounted I am able to put a new rootfs onto the partition by:
+`tar xf rpilinux-image-raspberrypi4-64.tar.bz2 -C /mnt/rootB/`
+
+And then can change the cmdline.txt to use `root=/dev/mmcblk0p3` and boot an updated rootfs
+
+My other thought was to just put applications I would want to updated into this partition but I'm not sure if Yocto supports installing into another partition
+
+
 # TODO
 * Figure out how to have `bblayers.conf` automatically include the required layers
 ```
