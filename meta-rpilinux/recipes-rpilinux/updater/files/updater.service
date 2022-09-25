@@ -1,0 +1,15 @@
+# run 'systemctl list-units -t mount' to list mounted devices
+
+[Unit]
+Description=USB Updater
+Wants=multi-user.target
+After=run-media-DATA\x2dsda1.mount
+
+[Service]
+SyslogIdentifier="Updater"
+ExecStart=/usr/bin/updater.sh --usb
+
+[Install]
+WantedBy=run-media-DATA\x2dsda1.mount
+
+

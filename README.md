@@ -88,17 +88,40 @@ but in order to login via the screen I think you would need to renable this. Thi
  
 ## Dual Partition Updates
 I attempted to add either rouc or mender to try to have 2 partitions and be able to update via usb or network
-I could not get either working so my plan was to just have a second partition with some manual method of being able to perform updates using the second partition
+I could not get either working so I just have a second partition created using wic with the `rpilinux-partitions.wks` file.
 
-Currently that partition is not automounting for some reason
+I then have a very hacky script that is run as a service to update either a full rootfs or just contents of a zip file to the other partition. The way it works:
+1. Create a USB drive with 2 partitions second partition must be labeled "UPDATE"
+2. Copy zipped version of contents onto the USB drive you wish to have copied to the second partition
+3. The update script looks for a `update.sha256` file to check weather there is a new update
+4. You can run `sha256sum <zip_file_name> > update.sha256` to create the file
+5. In order to boot to a new rootfs the script looks for `.rootfs.tar` to be in the zip file name otherwise it will not switch the rootfs and will just copy the contents to the second partition
+6. Example of creating sha file for rootfs. `sha256sum rpilinux-image-raspberrypi4-64-20220925185212.rootfs.tar.bz2 > update.sha256` where `rpilinux-image-raspberrypi4-64-20220925185212.rootfs.tar.bz2` is the new rootfs you wish to switch to
 
-But when it is mounted I am able to put a new rootfs onto the partition by:
-`tar xf rpilinux-image-raspberrypi4-64.tar.bz2 -C /mnt/rootB/`
+The network update can be done by having both of these files (`rpilinux-image-raspberrypi4-64-20220925185212.rootfs.tar.bz2` and `update.sha256`) in a folder on a computer then running `python3 -m http.server` from within that folder and updating `/usr/bin/updater.sh` to use the IP of the computer running the server.
 
-And then can change the cmdline.txt to use `root=/dev/mmcblk0p3` and boot an updated rootfs
+The updater only checks if the `update.sha256` file is different than the last one. There is currently no check on the sha sum or on the date of the files.
 
-My other thought was to just put applications I would want to updated into this partition but I'm not sure if Yocto supports installing into another partition
+The network service is `net-updater.service` and the usb update service is `updater.service` they both use the `/usr/bin/updater.sh` script
 
+### Notes
+The automounting of the USB's could be improved currently it uses the label so in order for the update to work when a drive is plugged in the drive needs to have a second partition with the label "UPDATE"
+Specifically `run-media-DATA\x2dsda1.mount` is used to trigger the update script
+
+The update basically does:
+`tar xf rpilinux-image-raspberrypi4-64.tar.bz2 -C /run/media/rootB-mmcblk0p3/`
+or
+`tar xf rpilinux-image-raspberrypi4-64.tar.bz2 -C /run/media/rootA-mmcblk0p2/`
+
+It does check that the compressed update file contains `.rootfs.tar` in an attempt to not switch to an unbootable partition. But there are no sanity checks that the partition will boot before it switches
+
+The boot partition is changed by changing the cmdline.txt to use either `root=/dev/mmcblk0p3` or `root=/dev/mmcblk0p2` whichever is not the current rootfs
+
+In order to try to perserve some files across updates the home partition is coppied. There is also an option to update the `updater.sh` to add a settings directory that applications maybe saving files to you want to have copied over.
+
+This is not a very good way to perform updates, and I would like to get mender or rouc working as the long term solution but had several problems when trying to use either.
+
+The other option with this method if you are mainly updating a single application is to zip the application and install just the application to the second partition then sym link it to `/usr/bin/` I have tried this and had some issues with execution permissions with the applciation so to get around it I just add `ExecStartPre=chmod +x <app_name>` in the service file.
 
 # TODO
 * Figure out how to have `bblayers.conf` automatically include the required layers
@@ -111,4 +134,4 @@ My other thought was to just put applications I would want to updated into this 
 ```
 
 * Figure out mDNS or a method to broadcast / know IP Address
-* Add method for updates via usb or network instead of having to flash an sd card and replace the existing one
+* Figure out rouc or mender for better updates via usb or network instead of just writing some zip file to the other partition with no checks

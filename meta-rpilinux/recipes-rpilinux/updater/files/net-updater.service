@@ -1,0 +1,15 @@
+# run after network is online
+
+[Unit]
+Description=Network Updater
+Wants=multi-user.target
+After=multi-user.target network-online.target
+
+[Service]
+SyslogIdentifier="Network Updater"
+ExecStart=/usr/bin/updater.sh 
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
+
