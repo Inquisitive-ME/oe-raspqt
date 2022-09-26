@@ -6,7 +6,7 @@ USBPATH=$(find /run/media/ -type d -name "*sda2*")
 URL="http://192.168.1.1:8000"
 HASHFILE="update.sha256"
 CURRENT_ROOT=$(cat /proc/cmdline | grep -o '/dev/mmcblk0p3\|/dev/mmcblk0p2')
-NEW_ROOT=$(lsblk | sed -n 's#.*\(/run/media/.*mmcblk0p[0-9]\).*#\1#p')
+NEW_ROOT=$(lsblk | sed -n 's#.*\(/run/media/root.*mmcblk0p[0-9]\).*#\1#p')
 SETTINGS_PATH="/.config"
 
 echo "CURRENT ROOT: ${CURRENT_ROOT}"
