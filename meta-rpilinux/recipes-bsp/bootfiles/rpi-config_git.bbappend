@@ -7,9 +7,6 @@ RPI_EXTRA_CONFIG = ' \n \
     kernel=kernel_rpilinux.img \n \
     arm_64bit=1 \n \
     disable_splash=1 \n \
-    arm_freq=900 \n \
-    core_freq=333 \n \
-    sdram_freq=450 \n \
-    over_voltage=2 \n \
-    gpu_mem=256 \n \
+    disable_overscan=1 \n \
+    arm_boost=1 \n \
     '
