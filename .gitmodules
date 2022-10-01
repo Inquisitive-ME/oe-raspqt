@@ -10,3 +10,6 @@
 [submodule "meta-qt6"]
 	path = meta-qt6
 	url = git://code.qt.io/yocto/meta-qt6.git
+[submodule "meta-rauc"]
+	path = meta-rauc
+	url = https://github.com/rauc/meta-rauc.git

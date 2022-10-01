@@ -21,7 +21,7 @@ source oe-init-build-env
 
 ### Change Machine Type
 ```
-MACHINE ??= "raspberrypi4-64"
+MACHINE ?= "raspberrypi4-64"
 ``` 
 
 ### Set AUTHORIZED_KEYS_FILE_PATH
