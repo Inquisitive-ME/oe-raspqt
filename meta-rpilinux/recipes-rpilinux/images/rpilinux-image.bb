@@ -3,7 +3,7 @@ require recipes-core/images/core-image-minimal.bb
 IMAGE_INSTALL += "glibc libstdc++ bash-completion"
 IMAGE_INSTALL += "openssh openssl openssh-sftp-server ssh-pregen-hostkeys"
 IMAGE_INSTALL += "git"
-IMAGE_INSTALL += "udev-extraconf"
+IMAGE_INSTALL += "udev-extraconf updater"
 IMAGE_INSTALL += "python3 python3-numpy python3-pyzmq"
 
 IMAGE_INSTALL += "ttf-liberation-sans-narrow \
@@ -12,7 +12,7 @@ IMAGE_INSTALL += "ttf-liberation-sans-narrow \
                   ttf-liberation-serif \
                   ttf-roboto \
                   "
-
+                
 IMAGE_INSTALL += "stocqt"
 IMAGE_INSTALL += "util-linux rauc rauc-grow-data-part parted"
 

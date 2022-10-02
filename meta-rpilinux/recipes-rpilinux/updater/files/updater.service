@@ -4,12 +4,14 @@
 Description=USB Updater
 Wants=multi-user.target
 After=run-media-DATA\x2dsda1.mount
+StartLimitInterval=200
+StartLimitBurst=3
 
 [Service]
 SyslogIdentifier="Updater"
 ExecStart=/usr/bin/updater.sh --usb
+Restart=always
+RestartSec=10
 
 [Install]
 WantedBy=run-media-DATA\x2dsda1.mount
-
-
