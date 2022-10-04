@@ -11,9 +11,7 @@ echo "WORKING DIR: ${WORKING_DIR}"
 echo "HOME: ${HOME}"
 
 finish() {
-	rm -f "${WORKING_DIR}/$(awk '{print $2}' ${WORKING_DIR}/${HASHFILE}.pending)"
 	rm -f ${WORKING_DIR}/${HASHFILE}.pending
-	rm -f changelog.txt
 }
 
 trap finish EXIT
