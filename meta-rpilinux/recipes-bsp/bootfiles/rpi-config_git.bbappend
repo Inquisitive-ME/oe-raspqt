@@ -9,4 +9,5 @@ RPI_EXTRA_CONFIG = ' \n \
     disable_splash=1 \n \
     disable_overscan=1 \n \
     arm_boost=1 \n \
+    gpu_mem=512 \n \
     '

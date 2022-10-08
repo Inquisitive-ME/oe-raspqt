@@ -11,8 +11,10 @@ IMAGE_INSTALL += "ttf-liberation-sans-narrow \
                   ttf-liberation-sans \
                   ttf-liberation-serif \
                   ttf-roboto \
-                  "
-                
+                  libsdl-ttf \
+                  ttf-bitstream-vera \
+                "
+
 IMAGE_INSTALL += "stocqt"
 IMAGE_INSTALL += "util-linux rauc rauc-grow-data-part parted"
 
